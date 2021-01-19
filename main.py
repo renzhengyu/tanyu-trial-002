@@ -16,8 +16,14 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
             "error_msg": "num_count must be greater than 3 and less than 31",
             "data": [],
         }
+    elif max_x <= 100 or max_y < 100:
+        return {
+            "error_code": -2,
+            "error_msg": "max_x and max_y must be greater than 99",
+            "data": [],
+        }
     else:
-        for i in range(num_count):
+        for _ in range(num_count):
             ratio_x = int((max_x-2*radius)/radius)
             ratio_y = int((max_y-2*radius)/radius)
             item = {
