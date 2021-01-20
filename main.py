@@ -38,8 +38,8 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
         for _ in range(num_count):
             px, py = choice(all_points)
             # remove all the points in the square centered by p
-            for x in range (px-radius, px+radius+1):
-                for y in range (py-radius, py+radius):
+            for x in range (px-2*radius, px+2*radius+1):
+                for y in range (py-2*radius, py+2*radius+1):
                     try:
                         all_points.remove((px, py))
                     except ValueError:
@@ -61,4 +61,3 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
             "error_msg": "Successful.",
             "data": result,
         }
-
