@@ -9,7 +9,6 @@ max_num = 99
 
 @app.get('/numCount/{num_count}/radius/{radius}/maxX/{max_x}/maxY/{max_y}')
 async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
-    result = []
     if num_count < 3 or num_count > 30:
         return {
             "error_code": -1,
@@ -28,6 +27,7 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
             "error_msg": "screen too small",
             "data": [],
         }
+        
     else:
         all_points = []
         for x in range (radius, max_x-radius+1):
@@ -45,7 +45,8 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
                     except ValueError:
                         pass
             chosen_points.append((px,py))
-
+        
+        result = []
         for px, py in chosen_points:
             item = {
                 "num": randint(0, max_num),
