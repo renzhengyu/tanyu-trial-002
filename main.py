@@ -24,8 +24,8 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
         }
     else:
         for _ in range(num_count):
-            ratio_x = int((max_x-2*radius)/radius)
-            ratio_y = int((max_y-2*radius)/radius)
+            ratio_x = int((max_x-2*radius)/radius/4)
+            ratio_y = int((max_y-2*radius)/radius/4)
             item = {
                 "num": randint(0, max_num),
                 "color": choice(colors),
