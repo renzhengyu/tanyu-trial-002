@@ -29,23 +29,7 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
         }
         
     else:
-        all_points = []
-        for x in range (radius, max_x-radius+1):
-            for y in range(radius, max_y-radius+1):
-                all_points.append((x,y))
-        
-        chosen_points = []
-        for _ in range(num_count):
-            px, py = choice(all_points)
-            # remove all the points in the square centered by p
-            for x in range (px-2*radius, px+2*radius+1):
-                for y in range (py-2*radius, py+2*radius+1):
-                    try:
-                        all_points.remove((px, py))
-                    except ValueError:
-                        pass
-            chosen_points.append((px,py))
-        
+        chosen_points = helper(radius, max_x, max_y)
         result = []
         for px, py in chosen_points:
             item = {
@@ -62,3 +46,22 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
             "error_msg": "Successful.",
             "data": result,
         }
+
+def helper(radius, max_x, max_y):
+    all_points = []
+    for x in range (radius, max_x-radius+1):
+        for y in range(radius, max_y-radius+1):
+            all_points.append((x,y))
+    
+    chosen_points = []
+    for _ in range(num_count):
+        px, py = choice(all_points)
+        # remove all the points in the square centered by p
+        for x in range (px-2*radius, px+2*radius+1):
+            for y in range (py-2*radius, py+2*radius+1):
+                try:
+                    all_points.remove((px, py))
+                except ValueError:
+                    pass
+        chosen_points.append((px,py))
+    return chosen_points
