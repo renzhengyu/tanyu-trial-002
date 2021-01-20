@@ -16,22 +16,43 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
             "error_msg": "num_count must be greater than 3 and less than 31",
             "data": [],
         }
-    elif max_x <= 100 or max_y < 100:
+    elif max_x < 100 or max_y < 100:
         return {
             "error_code": -2,
             "error_msg": "max_x and max_y must be greater than 99",
             "data": [],
         }
+    elif (max_x-2*radius)*(max_y-2*radius)<=(num_count*radius*radius*4):
+        return {
+            "error_code": -3,
+            "error_msg": "screen too small",
+            "data": [],
+        }
     else:
+        all_points = []
+        for x in range (radius, max_x-radius+1):
+            for y in range(radius, max_y-radius+1):
+                all_points.append((x,y))
+        
+        chosen_points = []
         for _ in range(num_count):
-            ratio_x = int((max_x-2*radius)/radius/4)
-            ratio_y = int((max_y-2*radius)/radius/4)
+            px, py = choice(all_points)
+            # remove all the points in the square centered by p
+            for x in range (px-radius, px+radius+1):
+                for y in range (py-radius, py+radius):
+                    try:
+                        all_points.remove((px, py))
+                    except ValueError:
+                        pass
+            chosen_points.append((px,py))
+
+        for px, py in chosen_points:
             item = {
                 "num": randint(0, max_num),
                 "color": choice(colors),
                 "shape": choice(shapes),
-                "x": randint(1, ratio_x)*radius,
-                "y": randint(1, ratio_y)*radius,
+                "x": px,
+                "y": py,
                 "radius": radius,
             }
             result.append(item)
@@ -40,3 +61,4 @@ async def num_game(num_count: int, radius: int, max_x: int, max_y: int):
             "error_msg": "Successful.",
             "data": result,
         }
+
